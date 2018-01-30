@@ -1,0 +1,1 @@
+#Should generate a new empty report file using the scaffolding snippets.
