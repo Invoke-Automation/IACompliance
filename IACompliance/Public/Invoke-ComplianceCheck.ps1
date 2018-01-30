@@ -1,0 +1,1 @@
+# runs all .Checks.ps1 files in a folder
