@@ -1,16 +1,10 @@
 function New-Rule {
 	[CmdletBinding(
-		DefaultParameterSetName = 'WithPreCheck'
+		DefaultParameterSetName = 'NoPreCheck'
 	)]
 	Param (
 		# Name of the rule
 		[Parameter(
-			ParameterSetName = 'WithPreCheck',
-			Mandatory = $true,
-			Position = 1
-		)]
-		[Parameter(
-			ParameterSetName = 'NoPreCheck',
 			Mandatory = $true,
 			Position = 1
 		)]
