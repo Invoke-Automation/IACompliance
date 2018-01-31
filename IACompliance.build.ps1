@@ -57,7 +57,7 @@ task AppVeyorBuild -If ($env:APPVEYOR) Docs, {
         Try {
             # Update the manifest with the new version value and fix the weird string replace bug
             $functionList = ((Get-ChildItem -Path $PublicFunctionsPath -Recurse -Filter "*.ps1").BaseName)
-            Update-ModuleManifest -Path $ModuleManifestPath -ModuleVersion [version]$env:APPVEYOR_BUILD_VERSION -FunctionsToExport $functionList
+            Update-ModuleManifest -Path $ModuleManifestPath -ModuleVersion $env:APPVEYOR_BUILD_VERSION -FunctionsToExport $functionList
             (Get-Content -Path $ModuleManifestPath) -replace "PSGet_$ModuleName", "$ModuleName" | Set-Content -Path $ModuleManifestPath
             (Get-Content -Path $ModuleManifestPath) -replace 'NewManifest', "$ModuleName" | Set-Content -Path $ModuleManifestPath
             (Get-Content -Path $ModuleManifestPath) -replace 'FunctionsToExport = ', 'FunctionsToExport = @(' | Set-Content -Path $ModuleManifestPath -Force
