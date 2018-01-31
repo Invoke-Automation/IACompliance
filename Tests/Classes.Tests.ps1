@@ -4,7 +4,7 @@
 
 Describe 'IAComplianceRule' {
 	It 'Should have a constructor with Name,PreCheck,CheckScript' {
-		{[IAComplianceRule]::New($TestRule1Name,$TestRule1PreCheck,$TestRule1CheckScript)} | Should -Not -Throw
+		{[IAComplianceRule]::New($TestRule1Name,$TestRule1PreCheckScript,$TestRule1CheckScript)} | Should -Not -Throw
 	}
 	It 'Should have a constructor with Name,CheckScript' {
 		{[IAComplianceRule]::New($TestRule1Name,$TestRule1CheckScript)} | Should -Not -Throw
