@@ -1,7 +1,11 @@
 # Ensure everything works in the most strict mode.
 Set-StrictMode -Version Latest
 
-$RepoRoot = $PSScriptRoot
+if($env:APPVEYOR){
+    $RepoRoot = $env:APPVEYOR_BUILD_FOLDER
+} else {
+    $RepoRoot = $PSScriptRoot
+}
 $ModuleName = 'IACompliance'
 $ModulePath = Join-Path $RepoRoot $ModuleName
 $PublicFunctionsPath = Join-Path $ModulePath 'Public'
@@ -9,6 +13,42 @@ $DocsPath = Join-Path $RepoRoot 'docs'
 $DocsLocale = 'en-US'
 $ModuleManifestPath = Join-Path $ModulePath "$ModuleName.psd1"
 $LocalBuildPath = Join-Path $RepoRoot 'build'
+
+task ShowDebug {
+    Write-Build Gray
+    Write-Build Gray ('Project name:               {0}' -f $env:APPVEYOR_PROJECT_NAME)
+    Write-Build Gray ('Project root:               {0}' -f $env:APPVEYOR_BUILD_FOLDER)
+    Write-Build Gray ('Repo name:                  {0}' -f $env:APPVEYOR_REPO_NAME)
+    Write-Build Gray ('Branch:                     {0}' -f $env:APPVEYOR_REPO_BRANCH)
+    Write-Build Gray ('Commit:                     {0}' -f $env:APPVEYOR_REPO_COMMIT)
+    Write-Build Gray ('  - Author:                 {0}' -f $env:APPVEYOR_REPO_COMMIT_AUTHOR)
+    Write-Build Gray ('  - Time:                   {0}' -f $env:APPVEYOR_REPO_COMMIT_TIMESTAMP)
+    Write-Build Gray ('  - Message:                {0}' -f $env:APPVEYOR_REPO_COMMIT_MESSAGE)
+    Write-Build Gray ('  - Extended message:       {0}' -f $env:APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED)
+    Write-Build Gray ('Pull request number:        {0}' -f $env:APPVEYOR_PULL_REQUEST_NUMBER)
+    Write-Build Gray ('Pull request title:         {0}' -f $env:APPVEYOR_PULL_REQUEST_TITLE)
+    Write-Build Gray ('AppVeyor build ID:          {0}' -f $env:APPVEYOR_BUILD_ID)
+    Write-Build Gray ('AppVeyor build number:      {0}' -f $env:APPVEYOR_BUILD_NUMBER)
+    Write-Build Gray ('AppVeyor build version:     {0}' -f $env:APPVEYOR_BUILD_VERSION)
+    Write-Build Gray ('AppVeyor job ID:            {0}' -f $env:APPVEYOR_JOB_ID)
+    Write-Build Gray ('Build triggered from tag?   {0}' -f $env:APPVEYOR_REPO_TAG)
+    Write-Build Gray ('  - Tag name:               {0}' -f $env:APPVEYOR_REPO_TAG_NAME)
+    Write-Build Gray ('PowerShell version:         {0}' -f $PSVersionTable.PSVersion.ToString())
+    Write-Build Gray
+}
+
+task GetVersion {
+    $manifest = Test-ModuleManifest -Path $ModuleManifestPath
+    [System.Version]$version = $manifest.Version
+    Write-Host "Old Version: $version"
+    if($env:APPVEYOR){
+        $env:version = New-Object -TypeName System.Version -ArgumentList ($version.Major, $version.Minor, ($version.Build +1 ))
+        Write-Host "New Version: $env:version"
+    }  else {
+        $env:version = New-Object -TypeName System.Version -ArgumentList ($version.Major, $version.Minor, $version.Build, ($version.Revision + 1))
+        Write-Host "New Version: $env:version"
+    }
+}
 
 task PesterTests {
     try {
@@ -44,7 +84,7 @@ task Docs {
 	}
 }
 
-task AppVeyorBuild -If ($env:APPVEYOR) Docs, {
+task AppVeyorBuild -If ($env:APPVEYOR) GetVersion, Docs, {
     # Make sure we're using the Master branch and that it's not a pull request
     # Environmental Variables Guide: https://www.appveyor.com/docs/environment-variables/
     if ($env:APPVEYOR_REPO_BRANCH -ne 'master') {
@@ -57,7 +97,7 @@ task AppVeyorBuild -If ($env:APPVEYOR) Docs, {
         Try {
             # Update the manifest with the new version value and fix the weird string replace bug
             $functionList = ((Get-ChildItem -Path $PublicFunctionsPath -Recurse -Filter "*.ps1").BaseName)
-            Update-ModuleManifest -Path $ModuleManifestPath -ModuleVersion $env:APPVEYOR_BUILD_VERSION -FunctionsToExport $functionList
+            Update-ModuleManifest -Path $ModuleManifestPath -ModuleVersion $env:version -FunctionsToExport $functionList
             (Get-Content -Path $ModuleManifestPath) -replace "PSGet_$ModuleName", "$ModuleName" | Set-Content -Path $ModuleManifestPath
             (Get-Content -Path $ModuleManifestPath) -replace 'NewManifest', "$ModuleName" | Set-Content -Path $ModuleManifestPath
             (Get-Content -Path $ModuleManifestPath) -replace 'FunctionsToExport = ', 'FunctionsToExport = @(' | Set-Content -Path $ModuleManifestPath -Force
@@ -72,34 +112,14 @@ task AppVeyorPublish -If ($env:APPVEYOR) {
     # Publish Module to PSGallery
     Try {
         Publish-Module -Path $ModulePath -NuGetApiKey $env:NuGetApiKey -ErrorAction 'Stop'
-        Write-Host "$ModuleName PowerShell Module version $env:APPVEYOR_BUILD_VERSION published to the PowerShell Gallery." -ForegroundColor Cyan
+        Write-Host "$ModuleName PowerShell Module version $env:version published to the PowerShell Gallery." -ForegroundColor Cyan
     } Catch {
-        Write-Warning "Publishing update $env:APPVEYOR_BUILD_VERSION to the PowerShell Gallery failed."
-        throw $_
-    }
-
-    # Publish the new version back to Master on GitHub
-    Try {
-        # Set up a path to the git.exe cmd, import posh-git to give us control over git, and then push changes to GitHub
-        # Note that "update version" is included in the appveyor.yml file's "skip a build" regex to avoid a loop
-        $env:Path += ";$env:ProgramFiles\Git\cmd"
-        Import-Module posh-git -ErrorAction Stop
-        git config --global credential.helper store
-        Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:GitHubKey):x-oauth-basic@github.com`n"
-        git checkout master
-        git add --all
-        git status
-        git commit -s -m "Update version to $env:APPVEYOR_BUILD_VERSION"
-        git push origin master
-        Write-Host "$ModuleName PowerShell Module version $env:APPVEYOR_BUILD_VERSION published to GitHub." -ForegroundColor Cyan
-    } Catch {
-        # Sad panda; it broke
-        Write-Warning "Publishing update $env:APPVEYOR_BUILD_VERSION to GitHub failed."
+        Write-Warning "Publishing update $env:version to the PowerShell Gallery failed."
         throw $_
     }
 }
 
-task LocalBuild -If (!$env:APPVEYOR) Docs, {
+task LocalBuild -If (!$env:APPVEYOR) PesterTests, Docs, {
     if(Test-Path $ModuleManifestPath){
         $manifest = Test-ModuleManifest -Path $ModuleManifestPath
         [System.Version]$version = $manifest.Version
@@ -120,6 +140,10 @@ task LocalBuild -If (!$env:APPVEYOR) Docs, {
     } else {
         throw 'Build requires Module Manifest'
     }
+}
+
+task LocalPublish -If (!$env:APPVEYOR) PesterTests, {
+    Publish-Module -Path $ModulePath -NuGetApiKey (Get-Content '.\PSGallery.secret')
 }
 
 task . PesterTests, LocalBuild

@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/dp9nhmtfcrvey2ht/branch/master?svg=true)](https://ci.appveyor.com/project/TomasDeceuninck/iacompliance/branch/master)
+
 # IACompliance
 
 Invoke-Automation Compliance module is designed as a framework for descibing rules in PowerShell and checking the compliance of these rules on specified systems.
