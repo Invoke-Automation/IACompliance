@@ -1,0 +1,6 @@
+@{
+    ExcludeRules=@(
+			'PSUseToExportFieldsInManifest'
+			'PSAvoidUsingWriteHost'
+		)
+}
