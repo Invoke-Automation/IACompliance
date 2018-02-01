@@ -13,6 +13,12 @@ Describe 'New-Check' {
 		{New-Check -Name $TestCheckName -InputScript $TestCheckInputScript -Rules $null}  | Should -Throw
 	}
 	It 'Should return an IAComplianceCheck Object'{
-		(New-Check -Name $TestCheckName -InputScript $TestCheckInputScript -Rules $TestRule1).GetType().Name | Should -BeLike 'IAComplianceCheck'
+		{
+			$check = New-Check -Name $TestCheckName -InputScript $TestCheckInputScript -Rules $TestRule1
+			$check.Name | Should -Be $TestCheckName
+			$check.InputScript | Should -Be $TestCheckInputScript
+			$check.Rules | Should -Be $TestRule1
+			$check.GetType().Name | Should -BeLike 'IAComplianceCheck'
+		} | Should -Not -Throw
 	}
 }

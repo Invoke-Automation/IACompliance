@@ -15,18 +15,20 @@ Describe 'New-Rule' {
 	}
 	It 'Should not throw when using user friendly notation with PreCheck' {
 		{
-			New-Rule 'Number is Even' {
-				$Input -lt 2
-			} {
-				($Input % 2) -eq 0
-			}
+			$rule = New-Rule $TestRule1Name $TestRule1PreCheckScript $TestRule1CheckScript
+			
+			$rule.Name | Should -Be $TestRule1Name
+			$rule.PreCheckScript | Should -Be $TestRule1PreCheckScript
+			$rule.CheckScript | Should -Be $TestRule1CheckScript
 		} | Should -Not -Throw
 	}
 	It 'Should not throw when using user friendly notation without PreCheck' {
 		{
-			New-Rule 'Number is Even' {
-				($Input % 2) -eq 0
-			}
+			$rule = New-Rule $TestRule1Name $TestRule1CheckScript
+			
+			$rule.Name | Should -Be $TestRule1Name
+			$rule.PreCheckScript | Should -Be $null
+			$rule.CheckScript | Should -Be $TestRule1CheckScript
 		} | Should -Not -Throw
 	}
 }
