@@ -1,6 +1,6 @@
 . $PSScriptRoot\_InitializeTests.ps1
 
-Describe 'New-Rule' {
+Describe 'New-Rule' -Tag 'Rule' {
 	It 'Should require a non-null Name parameter' {
 		{New-Rule -Name $null -PreCheckScript $TestRule1PreCheckScript -CheckScript $TestRule1CheckScript} | Should -Throw
 	}

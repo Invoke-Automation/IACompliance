@@ -2,7 +2,7 @@
 
 . $PSScriptRoot\..\IACompliance\Private\_Classes.ps1
 
-Describe 'IAComplianceRule' {
+Describe 'IAComplianceRule' -Tag 'Class' {
 	It 'Should have a constructor with Name,PreCheck,CheckScript' {
 		{
 			$rule = [IAComplianceRule]::New($TestRule1Name,$TestRule1PreCheckScript,$TestRule1CheckScript)
@@ -20,11 +20,11 @@ Describe 'IAComplianceRule' {
 	}
 }
 
-Describe 'IAComplianceCheck' {
+Describe 'IAComplianceCheck' -Tag 'Class' {
 }
 
-Describe 'IAComplianceRuleCheckResult' {
+Describe 'IAComplianceRuleCheckResult' -Tag 'Class' {
 }
 
-Describe 'IAComplianceReport' {
+Describe 'IAComplianceReport' -Tag 'Class' {
 }
