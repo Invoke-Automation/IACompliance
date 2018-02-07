@@ -15,7 +15,7 @@ Describe 'New-Rule' {
 	}
 	It 'Should not throw when using user friendly notation with PreCheck' {
 		{
-			$rule = New-Rule $TestRule1Name $TestRule1PreCheckScript $TestRule1CheckScript
+			$rule = Rule $TestRule1Name -For $TestRule1PreCheckScript -Check $TestRule1CheckScript
 			
 			$rule.Name | Should -Be $TestRule1Name
 			$rule.PreCheckScript | Should -Be $TestRule1PreCheckScript
@@ -24,7 +24,7 @@ Describe 'New-Rule' {
 	}
 	It 'Should not throw when using user friendly notation without PreCheck' {
 		{
-			$rule = New-Rule $TestRule1Name $TestRule1CheckScript
+			$rule = Rule $TestRule1Name -Check $TestRule1CheckScript
 			
 			$rule.Name | Should -Be $TestRule1Name
 			$rule.PreCheckScript | Should -Be $null

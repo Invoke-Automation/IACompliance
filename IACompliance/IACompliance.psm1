@@ -29,4 +29,7 @@ foreach ($import in $Public) {
 	}
 }
 
-Export-ModuleMember -Function $Public.BaseName
+Set-Alias -Name 'Check' -Value New-Check
+Set-Alias -Name 'Rule' -Value New-Rule
+
+Export-ModuleMember -Function $Public.BaseName -Alias *

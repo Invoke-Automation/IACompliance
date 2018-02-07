@@ -21,4 +21,24 @@ Describe 'New-Check' {
 			$check.GetType().Name | Should -BeLike 'IAComplianceCheck'
 		} | Should -Not -Throw
 	}
+	It 'Should not throw when using user friendly notation with words' {
+		{
+			$check = Check $TestCheckName -This $TestCheckInputScript -Against $TestRule1
+			
+			$check.Name | Should -Be $TestCheckName
+			$check.InputScript | Should -Be $TestCheckInputScript
+			$check.Rules | Should -Be $TestRule1
+			$check.GetType().Name | Should -BeLike 'IAComplianceCheck'
+		} | Should -Not -Throw
+	}
+	It 'Should not throw when using user friendly notation without words' {
+		{
+			$check = Check $TestCheckName $TestCheckInputScript $TestRule1
+			
+			$check.Name | Should -Be $TestCheckName
+			$check.InputScript | Should -Be $TestCheckInputScript
+			$check.Rules | Should -Be $TestRule1
+			$check.GetType().Name | Should -BeLike 'IAComplianceCheck'
+		} | Should -Not -Throw
+	}
 }
