@@ -40,9 +40,9 @@
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>NoOutput</maml:name>
+          <maml:name>PassThru</maml:name>
           <maml:Description>
-            <maml:para>{{Fill NoOutput Description}}</maml:para>
+            <maml:para>{{Fill PassThru Description}}</maml:para>
           </maml:Description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -51,9 +51,9 @@
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>PassThru</maml:name>
+          <maml:name>Silent</maml:name>
           <maml:Description>
-            <maml:para>{{Fill PassThru Description}}</maml:para>
+            <maml:para>{{Fill Silent Description}}</maml:para>
           </maml:Description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -89,9 +89,9 @@
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>NoOutput</maml:name>
+        <maml:name>PassThru</maml:name>
         <maml:Description>
-          <maml:para>{{Fill NoOutput Description}}</maml:para>
+          <maml:para>{{Fill PassThru Description}}</maml:para>
         </maml:Description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -101,9 +101,9 @@
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>PassThru</maml:name>
+        <maml:name>Silent</maml:name>
         <maml:Description>
-          <maml:para>{{Fill PassThru Description}}</maml:para>
+          <maml:para>{{Fill Silent Description}}</maml:para>
         </maml:Description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -176,7 +176,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="This">
           <maml:name>InputScript</maml:name>
           <maml:Description>
             <maml:para>{{Fill InputScript Description}}</maml:para>
@@ -188,7 +188,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="Against">
           <maml:name>Rules</maml:name>
           <maml:Description>
             <maml:para>{{Fill Rules Description}}</maml:para>
@@ -203,7 +203,7 @@
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="This">
         <maml:name>InputScript</maml:name>
         <maml:Description>
           <maml:para>{{Fill InputScript Description}}</maml:para>
@@ -227,7 +227,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="Against">
         <maml:name>Rules</maml:name>
         <maml:Description>
           <maml:para>{{Fill Rules Description}}</maml:para>
@@ -303,7 +303,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="Check">
           <maml:name>CheckScript</maml:name>
           <maml:Description>
             <maml:para>{{Fill CheckScript Description}}</maml:para>
@@ -315,7 +315,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="For">
           <maml:name>PreCheckScript</maml:name>
           <maml:Description>
             <maml:para>{{Fill PreCheckScript Description}}</maml:para>
@@ -330,7 +330,7 @@
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="Check">
         <maml:name>CheckScript</maml:name>
         <maml:Description>
           <maml:para>{{Fill CheckScript Description}}</maml:para>
@@ -354,7 +354,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="For">
         <maml:name>PreCheckScript</maml:name>
         <maml:Description>
           <maml:para>{{Fill PreCheckScript Description}}</maml:para>

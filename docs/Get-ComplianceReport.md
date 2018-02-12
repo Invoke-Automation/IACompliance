@@ -13,7 +13,7 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Get-ComplianceReport [-Name] <String> [-Checks] <IAComplianceCheck[]> [-PassThru] [-NoOutput]
+Get-ComplianceReport [-Name] <String> [-Checks] <IAComplianceCheck[]> [-PassThru] [-Silent]
  [<CommonParameters>]
 ```
 
@@ -61,8 +61,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -NoOutput
-{{Fill NoOutput Description}}
+### -PassThru
+{{Fill PassThru Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -76,8 +76,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -PassThru
-{{Fill PassThru Description}}
+### -Silent
+{{Fill Silent Description}}
 
 ```yaml
 Type: SwitchParameter

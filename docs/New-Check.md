@@ -36,7 +36,7 @@ PS C:\> {{ Add example code here }}
 ```yaml
 Type: ScriptBlock
 Parameter Sets: (All)
-Aliases:
+Aliases: This
 
 Required: True
 Position: 2
@@ -66,7 +66,7 @@ Accept wildcard characters: False
 ```yaml
 Type: Object[]
 Parameter Sets: (All)
-Aliases:
+Aliases: Against
 
 Required: True
 Position: 3

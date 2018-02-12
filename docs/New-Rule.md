@@ -42,7 +42,7 @@ PS C:\> {{ Add example code here }}
 ```yaml
 Type: ScriptBlock
 Parameter Sets: (All)
-Aliases:
+Aliases: Check
 
 Required: True
 Position: 2
@@ -72,7 +72,7 @@ Accept wildcard characters: False
 ```yaml
 Type: ScriptBlock
 Parameter Sets: WithPreCheck
-Aliases:
+Aliases: For
 
 Required: True
 Position: 2
