@@ -34,13 +34,11 @@ function Get-ComplianceReport {
 		$Results = @()
 		foreach ($check in $Checks) {
 			if(!$Silent){
-				Write-Host("  ") -NoNewline
-				Write-Host $check.Name -ForegroundColor Yellow
+				Write-Host ("  " + $check.Name) -ForegroundColor Yellow
 			}
 			Invoke-Command -ScriptBlock $check.InputScript | Where-Object {$_ -ne $null} | ForEach-Object {
 				if(!$Silent){
-					Write-Host("    ") -NoNewline
-					Write-Host $_.ToString() -ForegroundColor Green
+					Write-Host ("    " + $_.ToString()) -ForegroundColor Green
 				}
 				foreach ($rule in $check.Rules) {
 					if($rule.ShouldBeChecked($_)){
@@ -48,13 +46,11 @@ function Get-ComplianceReport {
 						$Results += $RuleCheckResult
 						if ($RuleCheckResult.IsCompliant) {
 							if(!$Silent){
-								Write-Host("      ") -NoNewline
-								Write-Host $rule.Name -ForegroundColor DarkGreen
+								Write-Host ("      " + $rule.Name) -ForegroundColor DarkGreen
 							}
 						} else {
 							if(!$Silent){
-								Write-Host("      ") -NoNewline
-								Write-Host $rule.Name -ForegroundColor DarkRed
+								Write-Host ("      " + $rule.Name) -ForegroundColor DarkRed
 							}
 						}
 					}
