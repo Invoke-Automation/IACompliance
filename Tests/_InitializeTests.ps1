@@ -1,6 +1,11 @@
+$ModuleName = 'IACompliance'
+$TestsFolder = Split-Path -Parent $MyInvocation.MyCommand.Path
+$ProjectRoot = Split-Path -Parent $TestsFolder
+$ModuleRoot = Join-Path $ProjectRoot $ModuleName
+
 #if(!((Get-Module IACompliance).Version -gt [version]'0.1.0')){
 if(!(Get-Module IACompliance)){
-	Import-Module $PSScriptRoot\..\IACompliance -Force
+	Import-Module $ModuleRoot -Force
 }
 
 #$ErrorActionPreference = 'SilentlyContinue'
