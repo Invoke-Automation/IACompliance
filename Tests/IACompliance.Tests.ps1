@@ -1,7 +1,7 @@
 #Requires -Modules PSScriptAnalyzer
 . $PSScriptRoot\_InitializeTests.ps1
 
-Context 'PSScriptAnalyzer Rules' {
+Context 'PSScriptAnalyzer Rules' -Tag 'Meta' {
 	$analysis = Invoke-ScriptAnalyzer -Path $ProjectRoot -Recurse
 	$scriptAnalyzerRules = Get-ScriptAnalyzerRule
 	forEach ($rule in $scriptAnalyzerRules) {

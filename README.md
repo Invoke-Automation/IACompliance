@@ -6,7 +6,11 @@ Invoke-Automation Compliance module is designed as a framework for descibing rul
 
 ## Getting started
 
-ToDo
+Install IACompliance from the [PowerShell Gallery](https://www.powershellgallery.com/) using `Install-Module`.
+
+```powershell
+Install-Module -Name IACompliance
+```
 
 ## Contributing to IACompliance
 
