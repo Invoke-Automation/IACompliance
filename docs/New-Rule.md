@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-Rule
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Make a new IAComplianceRule
 
 ## SYNTAX
 
@@ -23,67 +23,104 @@ New-Rule [-Name] <String> [-PreCheckScript] <ScriptBlock> [-CheckScript] <Script
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+The New-Rule cmdlet creates an IAComplianceRule object.
+An IAComplianceRule object is used to check whether or not an object complies with the defined rule.
+If a PreCheck is defined an object wil only be checked if the PreCheck returns $true.
+
+
+### Aliasses
+
+For readability purposes several Aliases are defined for the New-Rule cmdlet and its Parameters.
+
+
+### Framework
+
+IAComplianceRules (`New-Rule` | `Rule`) are designed to be combined in an IAComplianceCheck (`New-Check` | `Check`) which can then be used to generate an IAComplianceReport (`Get-IAComplianceReport`).
 
 ## EXAMPLES
 
-### Example 1
+### EXAMPLE 1
+```powershell
+$newRule = Rule 'Should start with capital letter' -For {
+	$Input[0].GetType().Name -like 'String'
+} -Check {
+	$Input -cmatch '^[A-Z]'
+}
 ```
-PS C:\> {{ Add example code here }}
-```
+A IAComplianceRule object being created using the New-Rule cmdlet aliasses.
+This rule checks if the Object to be checked is of the type 'String'.
+If the oject is of that type it checks if the String starts with a capital letter.
+* $newRule.Check('Test') will return $true
+* $newRule.Check('test') will return $false
+* $newRule.Check(4) will return $null
 
-{{ Add example description here }}
+### EXAMPLE 2
+```powershell
+$newRule = New-Rule 'Should be in obscure list' -CheckScript {
+	$Input -in @(' ',4,(Get-Date -Day 1 -Month 1 -Year 1970))
+}
+```
+This rule checks if an object is in the list `@(' ',4,(Get-Date -Day 1 -Month 1 -Year 1970))`.
+* $newRule.Check(4) will return $true
+* $newRule.Check(Get-Date) will return $false
 
 ## PARAMETERS
 
-### -CheckScript
-{{Fill CheckScript Description}}
-
-```yaml
-Type: ScriptBlock
-Parameter Sets: (All)
-Aliases: Check
-
-Required: True
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Name
-{{Fill Name Description}}
+Name of the rule.
 
 ```yaml
-Type: String
+Type: System.String
 Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 1
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -PreCheckScript
-{{Fill PreCheckScript Description}}
+ScriptBlock to check if rule applies to an object.
+
+This parameter descirbes the ScriptBlock that will be run when the compliance of an object is checked. The object to be checked can be accessed through the $Input automatic variable.
+
+If the ScriptBlock returns $true the object will be checked against the CheckScript otherwise the check will return $null.
 
 ```yaml
-Type: ScriptBlock
+Type: System.Management.Automation.ScriptBlock
 Parameter Sets: WithPreCheck
 Aliases: For
 
 Required: True
-Position: 2
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CheckScript
+ScriptBlock to check compliance of an object.
+
+This parameter describes the ScriptBlock that will be run when the the compliance of an object is checked and the PreCheck (if defined) returned $true. The object to be checked can be accessed through the $Input automatic variable.
+
+If the ScriptBlock returns $true the object complies with this rule, if not the object does not comply with this rule.
+
+```yaml
+Type: System.Management.Automation.ScriptBlock
+Parameter Sets: (All)
+Aliases: Check
+
+Required: True
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
-For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -91,7 +128,8 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 
 ## OUTPUTS
 
-### System.Object
+### IAComplianceRule
+	The cmdlet returns an IAComplianceRule object.
 
 ## NOTES
 

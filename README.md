@@ -2,7 +2,7 @@
 
 # IACompliance
 
-Invoke-Automation Compliance module is designed as a framework for descibing rules in PowerShell and checking the compliance of these rules on specified systems.
+Invoke-Automation Compliance module is designed as a framework for descibing rules in PowerShell and checking the compliance of these rules on specified objects.
 
 ## Getting started
 

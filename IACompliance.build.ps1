@@ -14,7 +14,7 @@ $DocsLocale = 'en-US'
 $ModuleManifestPath = Join-Path $ModulePath "$ModuleName.psd1"
 $LocalBuildPath = Join-Path $RepoRoot 'build'
 
-task ShowDebug {
+task ShowAppVeyorDebug {
 	Write-Build Gray
 	Write-Build Gray ('Project name:               {0}' -f $env:APPVEYOR_PROJECT_NAME)
 	Write-Build Gray ('Project root:               {0}' -f $env:APPVEYOR_BUILD_FOLDER)
@@ -38,7 +38,6 @@ task ShowDebug {
 }
 
 task GetVersion {
-
 	# Into dev increment build
 	# Into release increment build
 	# Into master don't increment build
@@ -48,9 +47,9 @@ task GetVersion {
 		[System.Version]$env:version = $manifest.Version
 		if ($env:APPVEYOR) {
 			if (($env:APPVEYOR_REPO_BRANCH -like "release/*") -or ($env:APPVEYOR_REPO_BRANCH -like "dev*")) {
-				Write-Host "Old Version: $version"
+				# Write-Host "Old Version: $version"
 				$env:version = New-Object -TypeName System.Version -ArgumentList ($version.Major, $version.Minor, ($version.Build + 1 ))
-				Write-Host "New Version: $env:version"
+				# Write-Host "New Version: $env:version"
 				Try {
 					# Update the manifest with the new version value and fix the weird string replace bug
 					$functionList = ((Get-ChildItem -Path $PublicFunctionsPath -Recurse -Filter "*.ps1").BaseName)
@@ -83,7 +82,7 @@ task PesterTests {
 	}
 }
 
-task Docs {
+task UpdateDocs {
 	# determin parameters
 	if (-not ((Test-Path $DocsPath) -and (Test-Path $ModulePath))) {
 		throw "Repository structure does not look OK"
@@ -93,18 +92,21 @@ task Docs {
 			Import-Module platyPS
 			Import-Module $modulePath -Force
 
-			# Generate markdown and external help (Will overwrite existing)
-			New-MarkdownHelp -Module $ModuleName -OutputFolder $docsPath -Locale $DocsLocale -Force
-			New-ExternalHelp -Path $docsPath -OutputPath (Join-Path -Path $modulePath -ChildPath $DocsLocale) -Force
+			# Generate markdown for new cmdlets
+			New-MarkdownHelp -Module $ModuleName -OutputFolder $docsPath -Locale $DocsLocale -UseFullTypeName -ErrorAction SilentlyContinue | Out-Null
+			# Update markdown for existing cmdlets
+			Update-MarkdownHelp -Path $docsPath -UseFullTypeName | Out-Null
+			# Generate external help
+			New-ExternalHelp -Path $docsPath -OutputPath (Join-Path -Path $modulePath -ChildPath $DocsLocale) -Force | Out-Null
 		} else {
 			throw "You require the platyPS module to generate new documentation"
 		}
 	}
 }
 
-task AppVeyorBuild -If ($env:APPVEYOR) PesterTests, GetVersion, Docs, {
-	# Nothing realy special to do realy
-}
+task StandardBuild PesterTests, UpdateDocs
+
+task AppVeyorBuild -If ($env:APPVEYOR) StandardBuild
 
 task AppVeyorPublish -If ($env:APPVEYOR) {
 	# Publish Module to PSGallery
@@ -117,7 +119,7 @@ task AppVeyorPublish -If ($env:APPVEYOR) {
 	}
 }
 
-task LocalBuild -If (!$env:APPVEYOR) PesterTests, GetVersion, Docs, {
+task LocalBuild -If (!$env:APPVEYOR) StandardBuild, {
     $BuildFolderName = ('{0}\{1}' -f $ModuleName, (Test-ModuleManifest -Path $ModuleManifestPath).Version)
     $BuildFolderPath = (Join-Path $LocalBuildPath $BuildFolderName)
     if(Test-Path $BuildFolderPath) {
@@ -127,7 +129,7 @@ task LocalBuild -If (!$env:APPVEYOR) PesterTests, GetVersion, Docs, {
 	Copy-Item -Path (Join-Path $RepoRoot "$ModuleName\*") -Destination $BuildFolder -Recurse
 }
 
-task LocalPublishToPSGallery -If (!$env:APPVEYOR) PesterTests, {
+task LocalPublishToPSGallery -If (!$env:APPVEYOR) LocalBuild, {
 	Publish-Module -Path $ModulePath -NuGetApiKey (Get-Content '.\PSGallery.secret')
 }
 
