@@ -44,7 +44,7 @@ task GetVersion {
 	# Local don't
 	if (Test-Path $ModuleManifestPath) {
 		$manifest = Test-ModuleManifest -Path $ModuleManifestPath
-		[System.Version]$env:version = $manifest.Version
+		[System.Version]$version = $manifest.Version
 		if ($env:APPVEYOR) {
 			if (($env:APPVEYOR_REPO_BRANCH -like "release/*") -or ($env:APPVEYOR_REPO_BRANCH -like "dev*")) {
 				# Write-Host "Old Version: $version"
