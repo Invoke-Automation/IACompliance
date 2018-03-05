@@ -23,34 +23,34 @@ function Get-ComplianceReport {
 		[Parameter(
 			Mandatory = $false
 		)]
-		[switch] $NoOutput = $false
+		[switch] $Silent = $false
 	)
 	Begin {
 	}
 	Process {
-		if(!$NoOutput){
-			Write-Host ('Report: {0}' -f $Name) -ForegroundColor Yellow
+		if(!$Silent){
+			Write-Host $Name -ForegroundColor Yellow
 		}
 		$Results = @()
 		foreach ($check in $Checks) {
-			if(!$NoOutput){
-				Write-Host ("  Check: {0}" -f $check.Name) -ForegroundColor Yellow
+			if(!$Silent){
+				Write-Host ("  " + $check.Name) -ForegroundColor Yellow
 			}
-			Invoke-Command -ScriptBlock $check.InputScript | ForEach-Object {
-				if(!$NoOutput){
-					Write-Host ("    Object: {0}" -f $_) -ForegroundColor Yellow
+			Invoke-Command -ScriptBlock $check.InputScript | Where-Object {$_ -ne $null} | ForEach-Object {
+				if(!$Silent){
+					Write-Host ("    " + $_.ToString()) -ForegroundColor Green
 				}
 				foreach ($rule in $check.Rules) {
 					if($rule.ShouldBeChecked($_)){
 						$RuleCheckResult = [IAComplianceRuleCheckResult]::New($check, $rule, $_, $rule.Check($_))
 						$Results += $RuleCheckResult
 						if ($RuleCheckResult.IsCompliant) {
-							if(!$NoOutput){
-								Write-Host ("      Rule: {0}" -f $rule.Name) -ForegroundColor Green
+							if(!$Silent){
+								Write-Host ("      " + $rule.Name) -ForegroundColor DarkGreen
 							}
 						} else {
-							if(!$NoOutput){
-								Write-Host ("      Rule: {0}" -f $rule.Name) -ForegroundColor Red
+							if(!$Silent){
+								Write-Host ("      " + $rule.Name) -ForegroundColor DarkRed
 							}
 						}
 					}
@@ -58,10 +58,7 @@ function Get-ComplianceReport {
 			}
 		}
 		if($PassThru){
-			New-Object -TypeName 'PSObject' -Property @{
-				'ReportName' = $Name
-				'Results'    = $Results
-			}
+			[IAComplianceReport]::New($Name,$Results)
 		}
 	}
 	End {

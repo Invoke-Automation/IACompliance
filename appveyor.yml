@@ -52,7 +52,7 @@ install:
 
 before_build:
   - ps: |
-      Invoke-Build -Task ShowDebug
+      Invoke-Build -Task ShowAppVeyorDebug
       Invoke-Build -Task GetVersion
       Update-AppveyorBuild -Version $env:version
 
