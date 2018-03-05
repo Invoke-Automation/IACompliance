@@ -61,6 +61,12 @@ task GetVersion {
 				} catch {
 					throw $_
 				}
+				# Set AppVeyor version
+				try {
+					Update-AppveyorBuild -Version $env:version
+				} catch {
+					throw $_
+				}
 			}
 		}
 	} else {
