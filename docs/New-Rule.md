@@ -24,18 +24,18 @@ New-Rule [-Name] <String> [-PreCheckScript] <ScriptBlock> [-CheckScript] <Script
 
 ## DESCRIPTION
 The New-Rule cmdlet creates an IAComplianceRule object.
-An IAComplianceRule object is used to check whether or not an object complies with the defined rule.
+An IAComplianceRule object is used to check whether or not an object complies with the defined Rule.
 If a PreCheck is defined an object wil only be checked if the PreCheck returns $true.
 
 
-### Aliasses
+**Aliasses**
 
 For readability purposes several Aliases are defined for the New-Rule cmdlet and its Parameters.
 
 
-### Framework
+**Framework**
 
-IAComplianceRules (`New-Rule` | `Rule`) are designed to be combined in an IAComplianceCheck (`New-Check` | `Check`) which can then be used to generate an IAComplianceReport (`Get-IAComplianceReport`).
+IAComplianceRule objects (`New-Rule` | `Rule`) are designed to be combined in an IAComplianceCheck (`New-Check` | `Check`) which can then be used to generate an IAComplianceReport (`Get-IAComplianceReport`).
 
 ## EXAMPLES
 
@@ -47,8 +47,9 @@ $newRule = Rule 'Should start with capital letter' -For {
 	$Input -cmatch '^[A-Z]'
 }
 ```
-A IAComplianceRule object being created using the New-Rule cmdlet aliasses.
-This rule checks if the Object to be checked is of the type 'String'.
+
+Am IAComplianceRule object being created using the New-Rule cmdlet aliasses.
+This Rule checks if the Object to be checked is of the type 'String'.
 If the oject is of that type it checks if the String starts with a capital letter.
 * $newRule.Check('Test') will return $true
 * $newRule.Check('test') will return $false
@@ -60,14 +61,15 @@ $newRule = New-Rule 'Should be in obscure list' -CheckScript {
 	$Input -in @(' ',4,(Get-Date -Day 1 -Month 1 -Year 1970))
 }
 ```
-This rule checks if an object is in the list `@(' ',4,(Get-Date -Day 1 -Month 1 -Year 1970))`.
+
+This Rule checks if an object is in the list `@(' ',4,(Get-Date -Day 1 -Month 1 -Year 1970))`.
 * $newRule.Check(4) will return $true
 * $newRule.Check(Get-Date) will return $false
 
 ## PARAMETERS
 
 ### -Name
-Name of the rule.
+Name of the Rule.
 
 ```yaml
 Type: System.String
@@ -82,7 +84,7 @@ Accept wildcard characters: False
 ```
 
 ### -PreCheckScript
-ScriptBlock to check if rule applies to an object.
+ScriptBlock to check if Rule applies to an object.
 
 This parameter descirbes the ScriptBlock that will be run when the compliance of an object is checked. The object to be checked can be accessed through the $Input automatic variable.
 
@@ -105,7 +107,7 @@ ScriptBlock to check compliance of an object.
 
 This parameter describes the ScriptBlock that will be run when the the compliance of an object is checked and the PreCheck (if defined) returned $true. The object to be checked can be accessed through the $Input automatic variable.
 
-If the ScriptBlock returns $true the object complies with this rule, if not the object does not comply with this rule.
+If the ScriptBlock returns $true the object complies with this Rule, if not the object does not comply with this Rule.
 
 ```yaml
 Type: System.Management.Automation.ScriptBlock
