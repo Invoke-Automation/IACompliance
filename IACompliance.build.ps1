@@ -116,12 +116,17 @@ task AppVeyorBuild -If ($env:APPVEYOR) StandardBuild
 
 task AppVeyorPublish -If ($env:APPVEYOR) {
 	# Publish Module to PSGallery
-	Try {
-		Publish-Module -Path $ModulePath -NuGetApiKey $env:NuGetApiKey -ErrorAction 'Stop'
-		Write-Host "$ModuleName PowerShell Module version $env:version published to the PowerShell Gallery." -ForegroundColor Cyan
-	} Catch {
-		Write-Warning "Publishing update $env:version to the PowerShell Gallery failed."
-		throw $_
+	if($env:APPVEYOR_REPO_BRANCH -like 'master'){
+		# Only the master branch gets published
+		Try {
+			Publish-Module -Path $ModulePath -NuGetApiKey $env:NuGetApiKey -ErrorAction 'Stop'
+			Write-Host "$ModuleName PowerShell Module version $env:version published to the PowerShell Gallery." -ForegroundColor Cyan
+		} Catch {
+			Write-Warning "Publishing update $env:version to the PowerShell Gallery failed."
+			throw $_
+		}
+	} else {
+		Write-Host 'Only the master branch gets published' -ForegroundColor Cyan
 	}
 }
 
