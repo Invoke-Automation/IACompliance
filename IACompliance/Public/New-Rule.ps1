@@ -16,6 +16,7 @@ function New-Rule {
 			Mandatory = $true,
 			Position = 2
 		)]
+		[Alias('For')]
 		[ValidateNotNullOrEmpty()]
 		[ScriptBlock] $PreCheckScript,
 		# ScriptBlock to check compliance of object
@@ -29,6 +30,7 @@ function New-Rule {
 			Mandatory = $true,
 			Position = 2
 		)]
+		[Alias('Check')]
 		[ValidateNotNullOrEmpty()]
 		[ScriptBlock] $CheckScript
 	)

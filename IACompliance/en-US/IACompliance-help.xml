@@ -6,11 +6,13 @@
       <command:verb>Get</command:verb>
       <command:noun>ComplianceReport</command:noun>
       <maml:description>
-        <maml:para>{{Fill in the Synopsis}}</maml:para>
+        <maml:para>Generate a new compliance report.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>{{Fill in the Description}}</maml:para>
+      <maml:para>The Get-ComplianceReport cmdlet generates a new compliance report for all defined Checks.</maml:para>
+      <maml:para>Foreach IAComplianceCheck provided for the Checks parameter the input objects will be generated and will be checked for compliance with every rule described in the Check. </maml:para>
+      <maml:para>By default the compliance report is printed to the console. When the -PassThru parameter is defined it will return an IAComplianceReport Object. When the -Silent parameter is defined no output will be printed to the console. Framework An IAComplianceReport objects is the result of a compliance report (`Get-IAComplianceReport`) where one or multiple IAComplianceCheck objects (`New-Check` | `Check`) where processed.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -18,11 +20,11 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Name</maml:name>
           <maml:Description>
-            <maml:para>{{Fill Name Description}}</maml:para>
+            <maml:para>Name of the Report.</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
           <dev:type>
-            <maml:name>String</maml:name>
+            <maml:name>System.String</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -30,7 +32,8 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>Checks</maml:name>
           <maml:Description>
-            <maml:para>{{Fill Checks Description}}</maml:para>
+            <maml:para>List of IAComplianceCheck objects.</maml:para>
+            <maml:para>This parameter descirbes the Checks which have to be processed to generate the report.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">IAComplianceCheck[]</command:parameterValue>
           <dev:type>
@@ -40,23 +43,23 @@
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>NoOutput</maml:name>
+          <maml:name>PassThru</maml:name>
           <maml:Description>
-            <maml:para>{{Fill NoOutput Description}}</maml:para>
+            <maml:para>Switch to passthru the IAComplianceReport object.</maml:para>
           </maml:Description>
           <dev:type>
-            <maml:name>SwitchParameter</maml:name>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>PassThru</maml:name>
+          <maml:name>Silent</maml:name>
           <maml:Description>
-            <maml:para>{{Fill PassThru Description}}</maml:para>
+            <maml:para>Switch to suppress the output to the console.</maml:para>
           </maml:Description>
           <dev:type>
-            <maml:name>SwitchParameter</maml:name>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
@@ -67,7 +70,8 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>Checks</maml:name>
         <maml:Description>
-          <maml:para>{{Fill Checks Description}}</maml:para>
+          <maml:para>List of IAComplianceCheck objects.</maml:para>
+          <maml:para>This parameter descirbes the Checks which have to be processed to generate the report.</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">IAComplianceCheck[]</command:parameterValue>
         <dev:type>
@@ -79,35 +83,35 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>Name</maml:name>
         <maml:Description>
-          <maml:para>{{Fill Name Description}}</maml:para>
+          <maml:para>Name of the Report.</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
         <dev:type>
-          <maml:name>String</maml:name>
+          <maml:name>System.String</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>NoOutput</maml:name>
+        <maml:name>PassThru</maml:name>
         <maml:Description>
-          <maml:para>{{Fill NoOutput Description}}</maml:para>
+          <maml:para>Switch to passthru the IAComplianceReport object.</maml:para>
         </maml:Description>
-        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">System.Management.Automation.SwitchParameter</command:parameterValue>
         <dev:type>
-          <maml:name>SwitchParameter</maml:name>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>PassThru</maml:name>
+        <maml:name>Silent</maml:name>
         <maml:Description>
-          <maml:para>{{Fill PassThru Description}}</maml:para>
+          <maml:para>Switch to suppress the output to the console.</maml:para>
         </maml:Description>
-        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">System.Management.Automation.SwitchParameter</command:parameterValue>
         <dev:type>
-          <maml:name>SwitchParameter</maml:name>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
@@ -126,10 +130,10 @@
     <command:returnValues>
       <command:returnValue>
         <dev:type>
-          <maml:name>System.Object</maml:name>
+          <maml:name>IAComplianceReport</maml:name>
         </dev:type>
         <maml:description>
-          <maml:para></maml:para>
+          <maml:para>If the -PassThru parameter is given the cmdlet returns an IAComplianceReport object.</maml:para>
         </maml:description>
       </command:returnValue>
     </command:returnValues>
@@ -141,9 +145,37 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <dev:code>Get-ComplianceReport -Name 'Alphanumeric Compliance Report' -Checks @(
+	Check 'StringCheck' -This {
+		@('Test1','test2','Test 3','Test-4')
+	} -Against {
+		@(
+			Rule 'Should start with capital letter' -For {
+				$Input[0].GetType().Name -like 'String'
+			} -Check {
+				$Input -cmatch '^[A-Z]'
+			},
+			Rule 'Should not contain any spaces' -For {
+				$Input[0].GetType().Name -like 'String'
+			} -Check {
+				$Input.IndexOf(' ') -lt 0
+			}
+		)
+	},
+	Check 'Number Check' -This {
+		@(2,3,5,12,2.4)
+	} -Against {
+		@(
+			Rule 'Should be an even number' -For {
+				$Input[0].GetType().Name -like 'Int32'
+			} -Check {
+				$Input % 2 -eq 0
+			}
+		)
+	}
+) -PassTru</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>An IAComplianceReport object being created using the Get-ComplianceReport cmdlet. This report will also write all compliance checks to the console.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -155,11 +187,11 @@
       <command:verb>New</command:verb>
       <command:noun>Check</command:noun>
       <maml:description>
-        <maml:para>{{Fill in the Synopsis}}</maml:para>
+        <maml:para>Make a new IAComplianceCheck</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>{{Fill in the Description}}</maml:para>
+      <maml:para>The New-Check cmdlet creates an IAComplianceCheck object. An IAComplianceCheck object is used to check several objects against a list of Rules. These Rules are defined as a list of IAComplianceRule objects. The Objects to be checked can be desribed using a script that gets those objects. Aliasses For readability purposes several Aliases are defined for the New-Check cmdlet and its Parameters. Framework IAComplianceCheck objects are used to combine objects (`InputScript`) with the IAComplianceRule objects (`New-Rule` | `Rule`) they should comply with. These Checks can then be used to generate an IAComplianceReport (`Get-IAComplianceReport`).</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -167,35 +199,37 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Name</maml:name>
           <maml:Description>
-            <maml:para>{{Fill Name Description}}</maml:para>
+            <maml:para>Name of the Check.</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
           <dev:type>
-            <maml:name>String</maml:name>
+            <maml:name>System.String</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="This">
           <maml:name>InputScript</maml:name>
           <maml:Description>
-            <maml:para>{{Fill InputScript Description}}</maml:para>
+            <maml:para>ScriptBlock to describe the objects to check.</maml:para>
+            <maml:para>This parameter describes the ScriptBlock that will be run to generate the objects that should comply with the Rules that are listed in the Rules parameter.</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">ScriptBlock</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">System.Management.Automation.ScriptBlock</command:parameterValue>
           <dev:type>
-            <maml:name>ScriptBlock</maml:name>
+            <maml:name>System.Management.Automation.ScriptBlock</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="Against">
           <maml:name>Rules</maml:name>
           <maml:Description>
-            <maml:para>{{Fill Rules Description}}</maml:para>
+            <maml:para>List of IAComplianceRule objects.</maml:para>
+            <maml:para>This parameter describes the Rules with which the generated input objects should comply.</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object[]</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">System.Object[]</command:parameterValue>
           <dev:type>
-            <maml:name>Object[]</maml:name>
+            <maml:name>System.Object[]</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -203,14 +237,15 @@
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="This">
         <maml:name>InputScript</maml:name>
         <maml:Description>
-          <maml:para>{{Fill InputScript Description}}</maml:para>
+          <maml:para>ScriptBlock to describe the objects to check.</maml:para>
+          <maml:para>This parameter describes the ScriptBlock that will be run to generate the objects that should comply with the Rules that are listed in the Rules parameter.</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">ScriptBlock</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">System.Management.Automation.ScriptBlock</command:parameterValue>
         <dev:type>
-          <maml:name>ScriptBlock</maml:name>
+          <maml:name>System.Management.Automation.ScriptBlock</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
@@ -218,23 +253,24 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>Name</maml:name>
         <maml:Description>
-          <maml:para>{{Fill Name Description}}</maml:para>
+          <maml:para>Name of the Check.</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
         <dev:type>
-          <maml:name>String</maml:name>
+          <maml:name>System.String</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="Against">
         <maml:name>Rules</maml:name>
         <maml:Description>
-          <maml:para>{{Fill Rules Description}}</maml:para>
+          <maml:para>List of IAComplianceRule objects.</maml:para>
+          <maml:para>This parameter describes the Rules with which the generated input objects should comply.</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Object[]</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">System.Object[]</command:parameterValue>
         <dev:type>
-          <maml:name>Object[]</maml:name>
+          <maml:name>System.Object[]</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
@@ -253,10 +289,10 @@
     <command:returnValues>
       <command:returnValue>
         <dev:type>
-          <maml:name>System.Object</maml:name>
+          <maml:name>IAComplianceCheck</maml:name>
         </dev:type>
         <maml:description>
-          <maml:para></maml:para>
+          <maml:para>The cmdlet returns an IAComplianceCheck object.</maml:para>
         </maml:description>
       </command:returnValue>
     </command:returnValues>
@@ -268,9 +304,24 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <dev:code>Check 'StringCheck' -This {
+	@('Test1','test2','Test 3','Test-4')
+} -Against {
+	@(
+		Rule 'Should start with capital letter' -For {
+			$Input[0].GetType().Name -like 'String'
+		} -Check {
+			$Input -cmatch '^[A-Z]'
+		},
+		Rule 'Should not contain any spaces' -For {
+			$Input[0].GetType().Name -like 'String'
+		} -Check {
+			$Input.IndexOf(' ') -lt 0
+		}
+	)
+}</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>An IAComplianceCheck object being created using the New-Check cmdlet aliasses. This Check describes that all objects generated in the InputScript ( -This ) should comply with the two Rules described in the Rules list ( -Against ).</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -282,47 +333,51 @@
       <command:verb>New</command:verb>
       <command:noun>Rule</command:noun>
       <maml:description>
-        <maml:para>{{Fill in the Synopsis}}</maml:para>
+        <maml:para>Make a new IAComplianceRule</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>{{Fill in the Description}}</maml:para>
+      <maml:para>The New-Rule cmdlet creates an IAComplianceRule object. An IAComplianceRule object is used to check whether or not an object complies with the defined Rule. If a PreCheck is defined an object wil only be checked if the PreCheck returns $true. Aliasses For readability purposes several Aliases are defined for the New-Rule cmdlet and its Parameters. Framework IAComplianceRule objects (`New-Rule` | `Rule`) are designed to be combined in an IAComplianceCheck (`New-Check` | `Check`) which can then be used to generate an IAComplianceReport (`Get-IAComplianceReport`).</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
         <maml:name>New-Rule</maml:name>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>Name</maml:name>
           <maml:Description>
-            <maml:para>{{Fill Name Description}}</maml:para>
+            <maml:para>Name of the Rule.</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
           <dev:type>
-            <maml:name>String</maml:name>
+            <maml:name>System.String</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
-          <maml:name>CheckScript</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill CheckScript Description}}</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">ScriptBlock</command:parameterValue>
-          <dev:type>
-            <maml:name>ScriptBlock</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="For">
           <maml:name>PreCheckScript</maml:name>
           <maml:Description>
-            <maml:para>{{Fill PreCheckScript Description}}</maml:para>
+            <maml:para>ScriptBlock to check if Rule applies to an object.</maml:para>
+            <maml:para>This parameter descirbes the ScriptBlock that will be run when the compliance of an object is checked. The object to be checked can be accessed through the $Input automatic variable.</maml:para>
+            <maml:para>If the ScriptBlock returns $true the object will be checked against the CheckScript otherwise the check will return $null.</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">ScriptBlock</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">System.Management.Automation.ScriptBlock</command:parameterValue>
           <dev:type>
-            <maml:name>ScriptBlock</maml:name>
+            <maml:name>System.Management.Automation.ScriptBlock</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="Check">
+          <maml:name>CheckScript</maml:name>
+          <maml:Description>
+            <maml:para>ScriptBlock to check compliance of an object.</maml:para>
+            <maml:para>This parameter describes the ScriptBlock that will be run when the the compliance of an object is checked and the PreCheck (if defined) returned $true. The object to be checked can be accessed through the $Input automatic variable.</maml:para>
+            <maml:para>If the ScriptBlock returns $true the object complies with this Rule, if not the object does not comply with this Rule.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">System.Management.Automation.ScriptBlock</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.ScriptBlock</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -331,37 +386,41 @@
     </command:syntax>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
-        <maml:name>CheckScript</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill CheckScript Description}}</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">ScriptBlock</command:parameterValue>
-        <dev:type>
-          <maml:name>ScriptBlock</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>Name</maml:name>
         <maml:Description>
-          <maml:para>{{Fill Name Description}}</maml:para>
+          <maml:para>Name of the Rule.</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
         <dev:type>
-          <maml:name>String</maml:name>
+          <maml:name>System.String</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="For">
         <maml:name>PreCheckScript</maml:name>
         <maml:Description>
-          <maml:para>{{Fill PreCheckScript Description}}</maml:para>
+          <maml:para>ScriptBlock to check if Rule applies to an object.</maml:para>
+          <maml:para>This parameter descirbes the ScriptBlock that will be run when the compliance of an object is checked. The object to be checked can be accessed through the $Input automatic variable.</maml:para>
+          <maml:para>If the ScriptBlock returns $true the object will be checked against the CheckScript otherwise the check will return $null.</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">ScriptBlock</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">System.Management.Automation.ScriptBlock</command:parameterValue>
         <dev:type>
-          <maml:name>ScriptBlock</maml:name>
+          <maml:name>System.Management.Automation.ScriptBlock</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="Check">
+        <maml:name>CheckScript</maml:name>
+        <maml:Description>
+          <maml:para>ScriptBlock to check compliance of an object.</maml:para>
+          <maml:para>This parameter describes the ScriptBlock that will be run when the the compliance of an object is checked and the PreCheck (if defined) returned $true. The object to be checked can be accessed through the $Input automatic variable.</maml:para>
+          <maml:para>If the ScriptBlock returns $true the object complies with this Rule, if not the object does not comply with this Rule.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">System.Management.Automation.ScriptBlock</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.ScriptBlock</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
@@ -380,10 +439,10 @@
     <command:returnValues>
       <command:returnValue>
         <dev:type>
-          <maml:name>System.Object</maml:name>
+          <maml:name>IAComplianceRule</maml:name>
         </dev:type>
         <maml:description>
-          <maml:para></maml:para>
+          <maml:para>The cmdlet returns an IAComplianceRule object.</maml:para>
         </maml:description>
       </command:returnValue>
     </command:returnValues>
@@ -394,10 +453,26 @@
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>$newRule = Rule 'Should start with capital letter' -For {
+	$Input[0].GetType().Name -like 'String'
+} -Check {
+	$Input -cmatch '^[A-Z]'
+}</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Am IAComplianceRule object being created using the New-Rule cmdlet aliasses. This Rule checks if the Object to be checked is of the type 'String'. If the oject is of that type it checks if the String starts with a capital letter. * $newRule.Check('Test') will return $true</maml:para>
+          <maml:para>* $newRule.Check('test') will return $false</maml:para>
+          <maml:para>* $newRule.Check(4) will return $null</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>$newRule = New-Rule 'Should be in obscure list' -CheckScript {
+	$Input -in @(' ',4,(Get-Date -Day 1 -Month 1 -Year 1970))
+}</dev:code>
+        <dev:remarks>
+          <maml:para>This Rule checks if an object is in the list `@(' ',4,(Get-Date -Day 1 -Month 1 -Year 1970))`. * $newRule.Check(4) will return $true</maml:para>
+          <maml:para>* $newRule.Check(Get-Date) will return $false</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

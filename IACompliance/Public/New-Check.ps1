@@ -13,6 +13,7 @@ function New-Check {
 			Mandatory = $true,
 			Position = 2
 		)]
+		[Alias('This')]
 		[ValidateNotNullOrEmpty()]
 		[ScriptBlock] $InputScript,
 		# Set of rules to check
@@ -20,6 +21,7 @@ function New-Check {
 			Mandatory = $true,
 			Position = 3
 		)]
+		[Alias('Against')]
 		[ValidateNotNullOrEmpty()]
 		[ValidateScript({
 			$_ | Foreach-Object {
