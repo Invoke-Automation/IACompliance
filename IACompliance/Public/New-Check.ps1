@@ -1,5 +1,7 @@
 function New-Check {
-	[CmdletBinding()]
+	[CmdletBinding(
+		HelpURI = "https://invoke-automation.github.io/Invoke-Documentation/projects/IACompliance/docs/New-Check"
+	)]
 	Param (
 		# Name of the rule
 		[Parameter(
