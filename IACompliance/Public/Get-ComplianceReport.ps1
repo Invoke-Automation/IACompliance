@@ -1,6 +1,8 @@
 # Creates scafolding for checks
 function Get-ComplianceReport {
-	[CmdletBinding()]
+	[CmdletBinding(
+		HelpURI = "https://invoke-automation.github.io/Invoke-Documentation/projects/IACompliance/docs/New-ComplianceReport"
+	)]
 	Param (
 		# Name of the report
 		[Parameter(

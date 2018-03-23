@@ -1,6 +1,7 @@
 function New-Rule {
 	[CmdletBinding(
-		DefaultParameterSetName = 'NoPreCheck'
+		DefaultParameterSetName = 'NoPreCheck',
+		HelpURI = "https://invoke-automation.github.io/Invoke-Documentation/projects/IACompliance/docs/New-Rule"
 	)]
 	Param (
 		# Name of the rule
